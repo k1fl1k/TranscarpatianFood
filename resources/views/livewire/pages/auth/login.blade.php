@@ -54,12 +54,6 @@ new #[Layout('layouts.guest')] class extends Component {
                 <input wire:model="form.remember" id="remember" type="checkbox" class="form-check-input">
                 <label class="form-check-label" for="remember">Запам'ятати мене</label>
             </div>
-
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" wire:navigate class="text-decoration-none">
-                    Забули пароль?
-                </a>
-            @endif
         </div>
 
         <div class="mb-3">
