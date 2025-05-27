@@ -5,6 +5,7 @@ namespace Example\TranscarpatianFood\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Example\TranscarpatianFood\Models\User;
 
@@ -38,11 +39,26 @@ class ProfileController extends Controller
             'city' => ['nullable', 'string', 'max:100'],
             'postal_code' => ['nullable', 'string', 'max:20'],
             'country' => ['nullable', 'string', 'max:100'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ], [
             'phone.regex' => 'Номер телефону повинен містити від 10 до 15 цифр.',
             'birth_date.before' => 'Дата народження повинна бути в минулому.',
             'birth_date.after' => 'Дата народження повинна бути після 1900 року.',
+            'avatar.image' => 'Файл повинен бути зображенням.',
+            'avatar.mimes' => 'Аватарка повинна бути у форматі: jpeg, png, jpg, gif.',
+            'avatar.max' => 'Розмір аватарки не повинен перевищувати 2MB.',
         ]);
+
+        // Обробка завантаження аватарки
+        if ($request->hasFile('avatar')) {
+            // Видалити стару аватарку, якщо вона існує
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // Зберегти нову аватарку
+            $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
+        }
 
         // Перевірка, чи змінився email
         if ($user->email !== $validated['email']) {
@@ -73,6 +89,21 @@ class ProfileController extends Controller
     }
 
     /**
+     * Видалити аватарку користувача
+     */
+    public function removeAvatar()
+    {
+        $user = Auth::user();
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+            $user->update(['avatar' => null]);
+        }
+
+        return redirect()->route('profile')->with('avatar_removed', 'Аватарку успішно видалено.');
+    }
+
+    /**
      * Видалити обліковий запис користувача
      */
     public function destroy(Request $request)
@@ -82,6 +113,11 @@ class ProfileController extends Controller
         ]);
 
         $user = Auth::user();
+
+        // Видалити аватарку перед видаленням облікового запису
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
 
         Auth::logout();
 
