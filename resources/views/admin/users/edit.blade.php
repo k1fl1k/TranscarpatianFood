@@ -21,7 +21,7 @@
                 <form action="{{ route('admin.users.update', $user) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -31,7 +31,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email *</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}" required>
@@ -40,7 +40,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Телефон</label>
@@ -49,7 +49,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="role" class="form-label">Роль *</label>
                                 <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check-lg"></i> Зберегти зміни
@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Зміна пароля -->
     <div class="col-md-4 mb-4">
         <div class="card shadow-sm">
@@ -83,7 +83,7 @@
                 <form action="{{ route('admin.users.change-password', $user) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="mb-3">
                         <label for="password" class="form-label">Новий пароль *</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
@@ -91,12 +91,12 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="password_confirmation" class="form-label">Підтвердження пароля *</label>
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                     </div>
-                    
+
                     <div class="d-grid">
                         <button type="submit" class="btn btn-warning">
                             <i class="bi bi-key"></i> Змінити пароль
@@ -105,7 +105,7 @@
                 </form>
             </div>
         </div>
-        
+
         <!-- Інформація про користувача -->
         <div class="card shadow-sm mt-4">
             <div class="card-header bg-white">
@@ -114,13 +114,6 @@
             <div class="card-body">
                 <p class="mb-1"><strong>Дата реєстрації:</strong> {{ $user->created_at->format('d.m.Y H:i') }}</p>
                 <p class="mb-1"><strong>Останній вхід:</strong> {{ $user->last_login_at ? $user->last_login_at->format('d.m.Y H:i') : 'Невідомо' }}</p>
-                <p class="mb-0"><strong>Email підтверджено:</strong> 
-                    @if($user->email_verified_at)
-                        <span class="text-success">Так</span>
-                    @else
-                        <span class="text-danger">Ні</span>
-                    @endif
-                </p>
             </div>
         </div>
     </div>

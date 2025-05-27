@@ -83,7 +83,7 @@
             <hr>
 
             <!-- Зображення -->
-            <div class="row">
+            <div class="row border bg-gray-100">
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="thumbnail" class="form-label">Головне зображення</label>
