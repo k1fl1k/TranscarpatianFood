@@ -28,27 +28,6 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="sort" class="form-label">Сортування</label>
-                            <select name="sort" id="sort" class="form-select">
-                                <option value="popularity-desc" {{ $sortBy == 'popularity' && $sortDirection == 'desc' ? 'selected' : '' }}>
-                                    За популярністю
-                                </option>
-                                <option value="price-asc" {{ $sortBy == 'price' && $sortDirection == 'asc' ? 'selected' : '' }}>
-                                    Ціна: від низької до високої
-                                </option>
-                                <option value="price-desc" {{ $sortBy == 'price' && $sortDirection == 'desc' ? 'selected' : '' }}>
-                                    Ціна: від високої до низької
-                                </option>
-                                <option value="name-asc" {{ $sortBy == 'name' && $sortDirection == 'asc' ? 'selected' : '' }}>
-                                    Назва: А-Я
-                                </option>
-                                <option value="name-desc" {{ $sortBy == 'name' && $sortDirection == 'desc' ? 'selected' : '' }}>
-                                    Назва: Я-А
-                                </option>
-                            </select>
-                        </div>
-
                         <button type="submit" class="btn btn-primary w-100">Застосувати</button>
                     </form>
                 </div>
